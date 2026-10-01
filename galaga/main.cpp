@@ -113,7 +113,8 @@ std::mt19937 Ball::gen(rd());
 
 int main()
 {
-    bool mBallSsample = true;
+    // Set this to true when you want to demonstrate the optional ball sample.
+    bool mBallSsample = false;
 
     if (mBallSsample)
     {
@@ -128,10 +129,16 @@ int main()
         auto player = std::make_shared<Player>(CMPUT350::Point2D(768 / 2, 900));
         engine.AddGameObject(player);
         engine.AddGameObject(std::make_shared<Stars>(250, CMPUT350::Rect(0, 0, 768, 1024)));
-        for (int x = 0; x < 4; x++)
+        constexpr int enemyRows = 5;
+        constexpr int enemyColumns = 8;
+        for (int row = 0; row < enemyRows; ++row)
         {
-            auto enemy = std::make_shared<Enemy>(CMPUT350::Point2D(100 + x * 200, 100));
-            engine.AddGameObject(enemy);
+            for (int column = 0; column < enemyColumns; ++column)
+            {
+                const float x = 80.f + column * 86.f;
+                const float y = 100.f + row * 65.f;
+                engine.AddGameObject(std::make_shared<Enemy>(CMPUT350::Point2D(x, y)));
+            }
         }
         engine.Run();
     }
